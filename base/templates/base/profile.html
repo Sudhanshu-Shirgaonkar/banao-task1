@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+
+{% block body %}
+<div class="d-flex justify-content-center">
+    <img class="rounded-circle" height="200" width="200" src="{{request.user.profile_picture.url}}">
+</div>
+<br>
+<div class="d-flex justify-content-center">
+    <h5>{{request.user.first_name}} {{request.user.last_name}}</h5>
+</div>
+<br>
+<div class="d-flex justify-content-center">
+    <h5>@{{request.user.username}}</h5>
+</div>
+<br>
+
+
+<div class="d-flex justify-content-center">
+    <h5><i>Address</i>
+        <p>{{request.user.address}}</p>
+    </h5>
+</div>
+
+<div class="d-flex justify-content-center">
+
+    <a class="btn btn-primary" href="{% url 'edit-profile' request.user.id %}" role="button">Update Profile</a>
+</div>
+
+
+
+{% endblock body %}

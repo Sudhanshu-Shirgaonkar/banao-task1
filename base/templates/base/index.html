@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+
+
+
+
+{% block body %}
+{% if request.user.user_type == 1 %}
+
+<h1>Welcome to Patient Dashboard</h1>
+
+{% elif request.user.user_type == 2 %}
+
+<h1>Welcome to Doctor Dashbord</h1>
+
+{% else %}
+<h1>Welcome</h1>
+{% endif %}
+
+<hr>
+
+
+<h1>Hello, <i>{{request.user.first_name}} {{request.user.last_name}}</i></h1>
+
+
+
+
+{% endblock body %}

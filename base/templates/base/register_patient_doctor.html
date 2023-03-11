@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+
+
+
+
+
+
+{% for field, error in form.errors.items %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ error|striptags }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+</ul>
+
+
+{% if page != 'Patient' %}
+
+
+<div class="container min-vh-100 d-flex justify-content-center align-items-center">
+
+    <form method="post" enctype="multipart/form-data">
+        <h3>Registering as Doctor</h3>
+        <div class="mb-3">
+            {% csrf_token %}
+
+            {{form.first_name.label}}:
+            {{form.first_name}}
+            <br>
+
+            {{form.last_name.label}}:
+            {{form.last_name}}
+            <br>
+
+            {{form.profile_picture.label}}:
+            {{form.profile_picture}}
+            <br><br>
+
+            {{form.username.label}}:
+            {{form.username}}
+            <br>
+
+
+            {{form.email.label}}:
+            {{form.email}}
+            <br>
+
+            {{form.password1.label}}:
+            {{form.password1}}
+            <br><br>
+
+            {{form.password2.label}}:
+            {{form.password2}}
+            <br><br>
+
+            {{form.address.label}}:
+            {{form.address}}
+            {{form.address.help_text}}
+            <br><br>
+
+            <button type="submit" class="btn btn-primary">Register</button>
+    </form>
+
+    <div>
+        <a href="{% url 'login' %}">Already have an account? Please login</a>
+    </div>
+</div>
+{% endif %}
+
+
+{% if page == 'Patient' %}
+<div class="container min-vh-100 d-flex justify-content-center align-items-center">
+
+    <form method="post" enctype="multipart/form-data">
+        <h3>Registering as Patient</h3>
+        <div class="mb-3">
+            {% csrf_token %}
+
+            {{form.first_name.label}}:
+            {{form.first_name}}
+            <br>
+
+            {{form.last_name.label}}:
+            {{form.last_name}}
+            <br>
+
+            {{form.profile_picture.label}}:
+            {{form.profile_picture}}
+            <br><br>
+
+            {{form.username.label}}:
+            {{form.username}}
+            <br>
+
+
+            {{form.email.label}}:
+            {{form.email}}
+            <br>
+
+            {{form.password1.label}}:
+            {{form.password1}}
+            <br><br>
+
+            {{form.password2.label}}:
+            {{form.password2}}
+            <br><br>
+
+            {{form.address.label}}:
+            {{form.address}}
+            {{form.address.help_text}}
+            <br><br>
+
+            <button type="submit" class="btn btn-primary">Register</button>
+    </form>
+
+    <div>
+        <a href="{% url 'login' %}">Already have an account? Please login</a>
+    </div>
+</div>
+{% endif %}
+<br>
+
+
+
+{% endblock body %}

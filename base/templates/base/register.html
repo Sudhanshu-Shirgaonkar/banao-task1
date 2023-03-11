@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block body %} 
+
+<div class="container">
+<a class="btn btn-primary" href="{% url 'doctor_register' %}" role="button">Register as Doctor</a>
+<a class="btn btn-secondary" href="{% url 'patient_register' %}" role="button">Register as Patient</a>
+
+</div>
+{% endblock body %}

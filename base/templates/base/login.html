@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block body %} 
+
+
+
+
+
+
+<div class="container min-vh-100 d-flex justify-content-center align-items-center">
+
+<form method="post">
+    <h3>Login</h3>
+    <div class="mb-3">
+        {% csrf_token %} 
+
+        {{form.as_p}}
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+
+  <div>
+    <a href="{% url 'register' %}">Dont have an account? Please register</a>
+    </div>
+</div>
+
+
+
+
+
+{% endblock body %}
