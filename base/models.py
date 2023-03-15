@@ -18,3 +18,36 @@ class User(AbstractUser):
 
 
 
+class Post(models.Model):
+    USER_TYPE_CHOICES = (
+        ('Mental Health', 'MENTAL HEALTH'),
+        ('Heart Disease', 'HEART DESEASE'),
+        ('Covid 19','COVID 19'),
+        ('Immunization','IMMUNIZATION')
+    )
+
+    created_by = models.ForeignKey(User, on_delete= models.CASCADE)
+    title = models.CharField(max_length= 100)
+    post_image = models.ImageField(default="post_pics/defaul.jpeg",upload_to='post_pics')
+    category =  models.CharField(max_length=100,choices= USER_TYPE_CHOICES,default= 'Mental Halth')
+    summary = models.TextField()
+    content = models.TextField()
+    is_draft = models.BooleanField(default=False)
+    is_saved = models.BooleanField(default=False)
+    updated = models.DateTimeField(auto_now=True) 
+    created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+
+        ordering = ['-created']
+
+
+    def __str__(self):
+
+        return self.title
+        
+
+
+
+
+

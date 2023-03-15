@@ -1,26 +1,96 @@
 {% extends 'base.html' %}
 
-
-
-
+{% load static %}
 
 {% block body %}
-{% if request.user.user_type == 1 %}
 
-<h1>Welcome to Patient Dashboard</h1>
-
-{% elif request.user.user_type == 2 %}
-
-<h1>Welcome to Doctor Dashbord</h1>
-
-{% else %}
-<h1>Welcome</h1>
+{% if messages %}
+{% for message in messages %}
+<div id="registerAlert" class="alert alert-success alert-dismissible fade show blogMessage" role="alert">
+  {{ message }}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
 {% endif %}
 
-<hr>
+
+<div class="row">
+  <div class="col-2">
+    <ul><a href="{% url 'index' %}">All</a></ul>
+    
+    {% for cat in category %} 
+    <ul><a href="{% url 'index' %}?q={{cat}}">{{cat}}</a></ul>
+  
+    {% endfor %}
+
+  </div>
 
 
-<h1>Hello, <i>{{request.user.first_name}} {{request.user.last_name}}</i></h1>
+
+  <div class="col-6">
+    <div class="float-left">
+      <div class="row">
+        <h2>Blogs..</h2>
+      </div>
+
+      {% for post in posts %}
+      <div class="mb-5">
+      <div class="border ">
+        <div class="row pt-5 ">
+          <div class="col-1"><img class="rounded-circle shadow-4-strong" height="50" width="50" alt="avatar"
+              src="{{post.created_by.profile_picture.url}}"></div>
+
+          <div class="col-4 row">
+            <h5 >{{post.created_by.first_name}} {{post.created_by.last_name}} (@{{post.created_by.username}})</h5>
+          </div>
+        </div>
+
+        <div class="row pt-3">
+          <div class="col-6">
+           <h2> <a href="{% url 'blog-detail' post.id %}">{{post.title}}</a></h2>
+          </div>
+
+          <div class="col-4  ">
+            <h5>({{post.category}})</h5>
+          </div>
+        </div>
+
+
+
+        <div class="row">
+          <p class ='summary'>{{post.summary}}</p>
+        </div>
+        <div class="row pb-5 ">
+          <div>
+            <img width="400px" height= '300px'
+              src="{{post.post_image.url}}">
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+      {% endfor %}
+
+    </div>
+  </div>
+
+  <div class="col-4">
+    {% if request.user.user_type == 2 %}
+    <a class="btn btn-outline-success" href="{% url 'create-blog' %}" role="button">Add Blog</a>
+    
+
+    {% endif %}
+  </div>
+
+</div>
+</div>
+
+
+
+
+
+
 
 
 

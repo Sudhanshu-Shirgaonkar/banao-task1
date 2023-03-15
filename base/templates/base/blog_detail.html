@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+
+{% block body %}
+
+<div class="d-flex justify-content-center">
+
+    <div>
+
+
+        
+        <div>
+            <img width="500" height="400" src="{{post.post_image.url}}">
+        </div>
+        <br>
+
+        <div>
+            <h2>{{post.title}}</h2>
+        </div>
+
+        
+        <div>
+            <h5>by : {{post.created_by.first_name}} {{post.created_by.last_name}} (@{{post.created_by.username}})</h5>
+        </div>
+        <br>
+
+        <div>
+            <h5><i>summary</i>
+            </h5>
+            <p>{{post.summary}}</p>
+        </div>
+
+
+        <div>
+            <h5><i>Content</i>
+            </h5>
+            <p>{{post.content}}</p>
+        </div>
+
+
+
+    </div>
+</div>
+{% endblock body %}

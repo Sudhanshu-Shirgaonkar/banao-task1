@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+
+{% block body %}
+
+<div class="d-flex justify-content-center">
+
+<div class="col-4">
+  <div>
+    <div class="row">
+      <h2>My Blogs..</h2>
+    </div>
+
+    {% for post in posts %}
+    <div class="mb-5">
+      <div class="border">
+
+        <div class="row pt-5">
+          <div class="col-2"><img class="rounded-circle" alt="avatar"
+              src="{{post.created_by.profile_picture.url}}" height="50" width="50"></div>
+
+          <div class="col-6 row">
+            <h5>{{post.created_by.first_name}} {{post.created_by.last_name}}
+              (@{{post.created_by.username}})</h5>
+          </div>
+        </div>
+
+        <div class="row pt-3">
+          <div class="col-6">
+            <h2> <a href="{% url 'blog-detail' post.id %}">{{post.title}}</a></h2>
+          </div>
+
+          <div class="col-6 ">
+            <h5 class="float-right">({{post.category}})</h5>
+          </div>
+        </div>
+
+
+
+        <div class="row">
+          <p class ='summary'>{{post.summary}}</p>
+        </div>
+        <div class="row pb-5">
+          <div>
+            <img class="img-fluid" src="{{post.post_image.url}}">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="float-r m-5">
+            <a class="btn btn-info" href="{% url 'update-blog' post.id %}" role="button">Update blog</a>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+
+{% endfor %}
+
+</div>
+
+</div>
+
+</div>
+
+{% endblock body %}

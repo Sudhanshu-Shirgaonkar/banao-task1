@@ -1,5 +1,5 @@
 from django.contrib.auth.forms import UserCreationForm
-from .models import User
+from .models import User,Post
 from django import forms
 
 
@@ -26,3 +26,26 @@ class MyUserCreationForm(UserCreationForm):
 
         for fieldname in ['username', 'password1', 'password2']:
             self.fields[fieldname].help_text = None
+
+
+
+
+
+
+class PostForm(forms.ModelForm):
+
+    class Meta:
+        model = Post
+        fields = ['title','post_image','category','summary','content']
+
+        widgets = {
+            
+            'title':forms.TextInput(attrs={'class':'form-control', 'id':'title'}),
+            'summary': forms.Textarea(attrs={'rows':4, 'cols':30, 'class':'form-control','id':'summary'}),
+            'content': forms.Textarea(attrs={'rows':4, 'cols':30, 'class':'form-control','id':'content'}),
+            'category':forms.Select(attrs={'class':'form-control'})
+    
+
+        }
+
+        
