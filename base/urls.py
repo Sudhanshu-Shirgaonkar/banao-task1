@@ -16,7 +16,11 @@ urlpatterns = [
     path("update-blog/<str:pk>/",views.UpdatePostView.as_view(),name='update-blog'),
     path('edit-profile/<str:pk>/',views.EditProfileView.as_view(),name='edit-profile'),
     path('drafts/',views.DraftView.as_view(),name='draft'),
-
     path('my-posts/',views.MyPostView.as_view(),name='my-posts'),
+    path('appointment/',views.AppointmentView.as_view(),name='appointment'),
+    path('book-appointment/<str:pk>/',views.BookAppointmentView.as_view(),name='book-appointment'),
+    path('appointment-detail/<str:pk>/',views.AppointmentDetailView.as_view(),name='appointment-detail'),
+
+
  
 ]

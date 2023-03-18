@@ -1,15 +1,22 @@
 from django.shortcuts import render,redirect
-from django.views import generic
-from .forms import MyUserCreationForm,PostForm
+from django.views import generic,View
+from .forms import MyUserCreationForm,PostForm,AppointmentForm
 from django.urls import reverse_lazy,reverse
-from django.contrib import messages
-from .models import User,Post
+from .models import User,Post,Appointment
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
-from django.contrib.messages import constants as messages
 from django.db.models import Q
+import datetime
+from googleapiclient.discovery import build
+import pickle
+
+
 # Create your views here.
+
+credentials = pickle.load(open("base/token.pkl", "rb"))
+service = build("calendar", "v3", credentials=credentials)
+
 
 
 class IndexView(LoginRequiredMixin,generic.ListView):
@@ -255,13 +262,76 @@ class MyPostView(LoginRequiredMixin,generic.ListView):
                                    
                                    (Q(is_draft =False))
                                    )
-    
+
 
     def dispatch(self, request,*args, **kwargs):
         if request.user.user_type == 1:
             return redirect('index')
         return super().dispatch(request, *args, **kwargs)
 
+
+class AppointmentView(LoginRequiredMixin,generic.ListView):
+
+    template_name = 'base/appointment.html'
+    model = User
+
+    context_object_name = 'doctors'
+
+    def get_queryset(self):
+
+        return User.objects.filter(user_type = 2)
+    
+
+    
+class BookAppointmentView(LoginRequiredMixin,generic.CreateView):
+    model = User
+    template_name = 'base/book_appointment.html'
+    form_class = AppointmentForm
+   
+
+    def form_valid(self, form,**kwargs):
+        doctor = User.objects.get(id = self.kwargs['pk'])
+
+        self.object = form.save(commit=False)
+        # self.object.end_time = self.object.start_time + datetime.timedelta(minutes=45)
+
+        start_time = self.object.start_time 
+        end_time =  datetime.datetime(1970, 1, 1, start_time.hour, start_time.minute, start_time.second, start_time.microsecond) + datetime.timedelta(minutes=45)
+        self.object.end_time = datetime.time(end_time.hour, end_time.minute, end_time.second, end_time.microsecond)
+        self.object.doctor_name = doctor.first_name + " " + doctor.last_name
+        self.object.doctor_email = doctor.email
+        self.object.save()
+
+        
+       
+
+        service.events().insert(
+        calendarId="primary",
+        body={
+            "summary": self.object.require,
+        
+            "start": {"dateTime": str(self.object.date)+"T"+str(start_time),
+            'timeZone': "Asia/Kolkata",
+        
+        
+        },
+            "end": {
+                "dateTime": str(self.object.date)+"T"+str(self.object.end_time),
+                   'timeZone': "Asia/Kolkata",
+            },
+            "attendees":[{"email":self.object.doctor_email}
+        
+        ]
+    },
+).execute()
+
+        return redirect('appointment-detail',pk= self.object.id)
+   
+
+class AppointmentDetailView(LoginRequiredMixin,generic.DetailView):
+    model = Appointment
+    template_name = 'base/appointment_detail.html'
+    context_object_name = 'appointment'
 
     
 

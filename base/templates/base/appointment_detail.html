@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+
+{% block body %} 
+
+<section>
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col col-md-9 col-lg-7 col-xl-5">
+
+          <h2>
+            Your appointment has been scheduled
+            </h2>
+          <div class="card mb-5" style="border-radius: 15px;">
+            <div class="card-body p-4">
+              <div class="d-flex text-black">
+
+                <div class="flex-grow-1 ms-3">
+                 
+                  <h5 class="mb-1">Name : Dr. {{appointment.doctor_name}}</h5>
+                  <h5 class="mb-1">Email : {{appointment.doctor_email}}</h5>
+
+                  <h5 class="mb-1">Date:  {{appointment.date}}</h5>
+                  <h5 class="mb-1">Time :  {{appointment.start_time|time:"H:i:s" }} to {{appointment.end_time|time:"H:i:s" }}</h5>
+                  
+                  
+
+      
+                </div>
+              </div>
+            </div>
+          </div>
+
+       
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock body %}

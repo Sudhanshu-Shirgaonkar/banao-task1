@@ -1,0 +1,19 @@
+{% extends 'base.html' %} 
+
+{% block body %} 
+
+<section>
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col col-md-9 col-lg-7 col-xl-5">
+            <form method="post">
+                {% csrf_token %}
+                {{form.as_p}}
+                <button type="submit" class="btn btn-primary">Confirm</button> 
+            </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock body %}

@@ -1,2 +1,5 @@
-media
-base/migrations
+/client_secret.json
+
+base/token.pkl
+
+base/migrations/

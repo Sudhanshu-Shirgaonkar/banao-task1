@@ -47,6 +47,19 @@ class Post(models.Model):
         return self.title
         
 
+class Appointment(models.Model):
+
+    require = models.CharField(max_length=100)
+    doctor_name =  models.CharField(max_length=100)
+    doctor_email = models.CharField(max_length=100)
+    date = models.DateField()
+    start_time = models.TimeField()
+    end_time = models.TimeField()
+
+
+    def __str__(self):
+
+        return self.require
 
 
 

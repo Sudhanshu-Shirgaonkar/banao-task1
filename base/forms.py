@@ -1,5 +1,5 @@
 from django.contrib.auth.forms import UserCreationForm
-from .models import User,Post
+from .models import User,Post,Appointment
 from django import forms
 
 
@@ -44,8 +44,27 @@ class PostForm(forms.ModelForm):
             'summary': forms.Textarea(attrs={'rows':4, 'cols':30, 'class':'form-control','id':'summary'}),
             'content': forms.Textarea(attrs={'rows':4, 'cols':30, 'class':'form-control','id':'content'}),
             'category':forms.Select(attrs={'class':'form-control'})
-    
-
         }
+
+
+
+
+
+class AppointmentForm(forms.ModelForm):
+
+    class Meta:
+
+        model = Appointment
+        exclude = ['end_time','doctor_name','doctor_email']
+
+
+        widgets = {
+            
+            'require':forms.TextInput(attrs={'class':'form-control', 'id':'title'}),
+            'date': forms.TextInput(attrs={ 'type':'date','class':'form-control'}),
+            'start_time': forms.TextInput(attrs={'type':'time','class':'form-control','id':'content'}),
+            'category':forms.Select(attrs={'class':'form-control'})
+        }
+
 
         
